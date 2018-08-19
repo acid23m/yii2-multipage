@@ -1,0 +1,39 @@
+{
+  "name": "acid23m/yii2-multipage",
+  "description": "Manage content on page that depends on URL query.",
+  "type": "yii2-extension",
+  "keywords": [
+    "yii2",
+    "extension",
+    "multi page",
+    "multi landing",
+    "content"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sergey P",
+      "email": "webmaster.cipa@gmail.com"
+    }
+  ],
+  "require": {
+    "yiisoft/yii2": "~2.0.15.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "multipage\\": "src"
+    }
+  },
+  "config": {
+    "process-timeout": 1800,
+    "fxp-asset": {
+      "enabled": false
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ]
+}
