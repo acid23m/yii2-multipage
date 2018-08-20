@@ -27,3 +27,13 @@ Usage
 -----
 
 Once the extension is installed, do next:
+
+- Add module in `backend/config/main.php`.
+
+```php
+'module' => [
+    'multipage' => [
+        'class' => \multipage\Module::class
+    ]
+]
+```

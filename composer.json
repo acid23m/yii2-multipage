@@ -24,6 +24,9 @@
       "multipage\\": "src"
     }
   },
+  "extra": {
+    "bootstrap": "multipage\\Bootstrap"
+  },
   "config": {
     "process-timeout": 1800,
     "fxp-asset": {
