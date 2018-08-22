@@ -11,6 +11,7 @@ namespace multipage;
 use yii\base\BootstrapInterface;
 use yii\db\Connection;
 use yii\helpers\FileHelper;
+use yii\i18n\PhpMessageSource;
 
 /**
  * Class Bootstrap.
@@ -79,6 +80,11 @@ SQL
                     ]
                 ]
             ]);
+
+            $app->getI18n()->translations['multipage'] = [
+                'class' => PhpMessageSource::class,
+                'basePath' => '@vendor/acid23m/yii2-multipage/src/messages'
+            ];
         }
     }
 

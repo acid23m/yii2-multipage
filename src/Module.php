@@ -8,9 +8,6 @@
 
 namespace multipage;
 
-use yii\i18n\I18N;
-use yii\i18n\PhpMessageSource;
-
 /**
  * Class Module.
  *
@@ -29,21 +26,6 @@ final class Module extends \yii\base\Module
         parent::init();
 
         $this->defaultRoute = 'marker/index';
-
-        // common configuration
-        \Yii::configure(\Yii::$app, [
-            'components' => [
-                'i18n' => [
-                    'class' => I18N::class,
-                    'translations' => [
-                        'multipage' => [
-                            'class' => PhpMessageSource::class,
-                            'basePath' => '@vendor/acid23m/yii2-multipage/src/messages'
-                        ]
-                    ]
-                ]
-            ]
-        ]);
     }
 
 }
