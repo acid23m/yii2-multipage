@@ -1,5 +1,33 @@
 <?php
 
 return [
-
+    'multistarnicy' => 'Multi-Pages',
+    'marker' => 'Marker',
+    'markery' => 'Markers for multi-page',
+    'po umolchaniu' => 'Default Value',
+    'parameter' => 'Parameter',
+    'parametry' => 'Parameters for multi-page',
+    'operator' => 'Operator',
+    'znachenie parametra' => 'Parameter Value (utm-label)',
+    'zamena markera' => 'Marker Replacement',
+    'status' => 'Status',
+    'data sozdania' => 'Created At',
+    'data obnovleniya' => 'Updated At',
+    'aktiven' => 'Active',
+    'ne aktiven' => 'Not Active',
+    'ravno' => 'Equally',
+    'soderzhit' => 'Contains',
+    'spisok markerov' => 'Marker List',
+    'spisok parametrov' => 'Parameters List',
+    'dobavit zapis' => 'Add Item',
+    'obnovit zapis' => 'Update Item',
+    'sozdat' => 'Create',
+    'sohranit' => 'Save',
+    'zapis ne sushestvuet' => 'The requested Item does not exist.',
+    'zapis udalena' => 'Item deleted.',
+    'ne udaleno iz za svasannih dannih' => 'It is impossible to remove item because of the associated data.',
+    'zapis obnovlena' => 'Item updated.',
+    'zapis dobavlena' => 'Item added.',
+    'markery eto' => 'Markers are code phrases in the text that will be replaced. Replacement occurs according to the <a href="{rules_link}">specified rules</a>. For replacement, you can use one word, several sentences, and html markup.',
+    'parametry eto' => 'Here are the rules for replacing <a href="{marker_link}">markers</a>, depending on the query parameters (utm-labels or other get-parameters) in the url.'
 ];
