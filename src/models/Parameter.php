@@ -22,6 +22,7 @@ use yii\db\Connection;
  *
  * @property int $id
  * @property int $marker_id
+ * @property string $language
  * @property int $type
  * @property string $query_name
  * @property string $query_value
@@ -114,7 +115,7 @@ class Parameter extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['query_name', 'query_value', 'country', 'region', 'city', 'replacement'], 'trim'],
+            [['language', 'query_name', 'query_value', 'country', 'region', 'city', 'replacement'], 'trim'],
             [['marker_id', 'type', 'status'], 'required'],
             [['operator'], 'default', 'value' => self::OPERATOR_EQUALLY],
             [['marker_id', 'type', 'operator'], 'integer'],
@@ -124,7 +125,8 @@ class Parameter extends ActiveRecord
                 'skipOnError' => true,
                 'targetRelation' => 'marker'
             ],
-            [['query_name', 'query_value', 'country', 'region', 'city'], 'default', 'value' => ''],
+            [['language', 'query_name', 'query_value', 'country', 'region', 'city'], 'default', 'value' => ''],
+            [['language'], 'string', 'max' => 7],
             [['query_name'], 'string', 'max' => 50],
             [['query_value', 'replacement'], 'string'],
             [['country', 'region', 'city'], 'string', 'max' => 150],
@@ -140,6 +142,7 @@ class Parameter extends ActiveRecord
         return [
             'id' => 'ID',
             'marker_id' => \Yii::t('multipage', 'marker'),
+            'language' => \Yii::t('multipage', 'yazyk'),
             'type' => \Yii::t('multipage', 'istochnik'),
             'query_name' => \Yii::t('multipage', 'parameter'),
             'query_value' => \Yii::t('multipage', 'znachenie parametra'),

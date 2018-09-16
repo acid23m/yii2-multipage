@@ -65,11 +65,15 @@ $type_list = $model->getList('types');
                     <?php $form->errorSummary($model) ?>
 
                     <div class="row">
-                        <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-12 col-md-4">
                             <?= $form->field($model, 'marker_id')->dropDownList($marks) ?>
                         </div>
 
-                        <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-12 col-md-4">
+                            <?= $form->field($model, 'language')->textInput(['maxlength' => true]) ?>
+                        </div>
+
+                        <div class="col-xs-12 col-md-4">
                             <?= $form->field($model, 'type')->dropDownList($type_list()) ?>
                         </div>
                     </div>

@@ -66,6 +66,7 @@ $operator_list = $model->getList('operators');
                                 ['marker/view', 'id' => $model->marker_id]) . '</strong>'
                             : null
                     ],
+                    'language',
                     [
                         'attribute' => 'type',
                         'value' => $type_list()[$model->type]

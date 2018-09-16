@@ -38,5 +38,6 @@ return [
     'nazvanie' => 'Название',
     'shirota' => 'Широта',
     'dolgota' => 'Долгота',
-    'vrem zona' => 'Временная зона'
+    'vrem zona' => 'Временная зона',
+    'yazyk' => 'Язык'
 ];

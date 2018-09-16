@@ -156,6 +156,8 @@ Replacement rules consists of:
 
 - *marker*, e.g. `{{marker_str}}`.
 
+- *language*, e.g. "en" or "de" or "ru".
+
 - *source type*, on the basis of what to do a replacement.
 
 - *replacement*. Markers will be replaced to this text if rule matches.
@@ -174,15 +176,17 @@ The value of the *get-parameter* can exactly or partially coincide.
 
 **country**:
 
-- *country name*, e.g. "Germany"
+- *country name*, e.g. "Germany".
 
 **region**:
 
-- *region name*, e.g. "Land Hessen"
+- *region name*, e.g. "Land Hessen".
+Search query in select box is case sensitive.
 
 **city**:
 
-- *city name*, e.g. "Saint Petersburg"
+- *city name*, e.g. "Saint Petersburg".
+Search query in select box is case sensitive.
 
 
 Examples

@@ -138,6 +138,7 @@ SQL
 CREATE TABLE "parameter" (
     "id" INTEGER PRIMARY KEY NOT NULL,
     "marker_id" INTEGER NOT NULL,
+    "language" VARCHAR(7),
     "type" INTEGER NOT NULL,
     "query_name" VARCHAR(50),
     "query_value" TEXT,

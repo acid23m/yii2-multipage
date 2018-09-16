@@ -35,7 +35,7 @@ final class ParameterSearch extends Parameter
     {
         return [
             [['id', 'marker_id', 'type', 'operator'], 'integer'],
-            [['query_name', 'query_value', 'replacement'], 'safe'],
+            [['language', 'query_name', 'query_value', 'replacement'], 'safe'],
             [['status'], 'boolean']
         ];
     }
@@ -63,7 +63,7 @@ final class ParameterSearch extends Parameter
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-                'attributes' => ['id', 'marker_id', 'type', 'operator', 'query_name', 'status'],
+                'attributes' => ['id', 'marker_id', 'language', 'type', 'operator', 'query_name', 'status'],
                 'enableMultiSort' => true,
                 'defaultOrder' => ['query_name' => SORT_ASC]
             ]
@@ -80,6 +80,7 @@ final class ParameterSearch extends Parameter
         $query->andFilterWhere([
             'parameter.id' => $this->id,
             'parameter.marker_id' => $this->marker_id,
+            'parameter.language' => $this->language,
             'parameter.type' => $this->type,
             'parameter.operator' => $this->operator,
             'parameter.status' => $this->status

@@ -38,5 +38,6 @@ return [
     'nazvanie' => 'Name',
     'shirota' => 'Latitude',
     'dolgota' => 'Longitude',
-    'vrem zona' => 'Timezone'
+    'vrem zona' => 'Timezone',
+    'yazyk' => 'Language'
 ];

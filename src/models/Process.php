@@ -51,6 +51,12 @@ class Process
             $marker_name = $rule->marker->name; // mark name to replace
 //            $marker_default_value = $rule->marker->text; // default value for mark
             $marker_replacement = $rule->replacement; // mark value to replace
+            // language dependency
+            if (empty($rule->language)) {
+                $is_language_suitable = true;
+            } else {
+                $is_language_suitable = $rule->language === \Yii::$app->language;
+            }
 
             switch ($rule->type) {
                 case $rule::TYPE_URL_QUERY:
@@ -62,20 +68,21 @@ class Process
                         // define operator
                         switch ($rule->operator) {
                             case $rule::OPERATOR_EQUALLY: // direct entry
-                                if ($get_value_now === $get_value) {
+                                if ($get_value_now === $get_value && $is_language_suitable) {
                                     // replace marker with certain value
                                     $text = \str_replace($marker_name, $marker_replacement, $text);
                                 }
                                 break;
 
                             case $rule::OPERATOR_CONTAINS: // not direct entry
-                                if (\strpos($get_value_now, $get_value) !== false) {
+                                if (\strpos($get_value_now, $get_value) !== false && $is_language_suitable) {
                                     // replace marker with certain value
                                     $text = \str_replace($marker_name, $marker_replacement, $text);
                                 }
                                 break;
                         }
                     }
+                    unset($get_name, $get_value, $get_value_now);
                     break;
 
                 case $rule::TYPE_GEO_COUNTRY:
@@ -87,10 +94,11 @@ class Process
                         $country_now = null;
                     }
 
-                    if (!empty($country_iso) && $country_now !== null && $country_iso === $country_now['iso']) {
+                    if (!empty($country_iso) && $country_now !== null && $country_iso === $country_now['iso'] && $is_language_suitable) {
                         // replace marker with certain value
                         $text = \str_replace($marker_name, $marker_replacement, $text);
                     }
+                    unset($country_iso, $country_now);
                     break;
 
                 case $rule::TYPE_GEO_REGION:
@@ -102,10 +110,11 @@ class Process
                         $region_now = null;
                     }
 
-                    if (!empty($region_iso) && $region_now !== null && $region_iso === $region_now['iso']) {
+                    if (!empty($region_iso) && $region_now !== null && $region_iso === $region_now['iso'] && $is_language_suitable) {
                         // replace marker with certain value
                         $text = \str_replace($marker_name, $marker_replacement, $text);
                     }
+                    unset($region_iso, $region_now);
                     break;
 
                 case $rule::TYPE_GEO_CITY:
@@ -117,14 +126,15 @@ class Process
                         $city_now = null;
                     }
 
-                    if (!empty($city) && $city_now !== null && $city === $city_now['name_en']) {
+                    if (!empty($city) && $city_now !== null && $city === $city_now['name_en'] && $is_language_suitable) {
                         // replace marker with certain value
                         $text = \str_replace($marker_name, $marker_replacement, $text);
                     }
+                    unset($city, $city_now);
                     break;
             }
         }
-        unset($rule);
+        unset($rule, $marker_name, $marker_replacement);
 
         // replace markers with default values in 2nd iteration
         foreach ($rules as &$rule) {
@@ -133,7 +143,14 @@ class Process
 
             $text = \str_replace($marker_name, $marker_default_value, $text);
         }
-        unset($rules, $rule);
+        unset($rules, $rule, $marker_name, $marker_default_value);
+
+        // replace markers with default values in 3 iteration
+        $markers = Marker::find()->published()->all();
+        foreach ($markers as &$marker) {
+            $text = \str_replace($marker->name, $marker->text, $text);
+        }
+        unset($markers, $marker);
 
         return $text;
     }
