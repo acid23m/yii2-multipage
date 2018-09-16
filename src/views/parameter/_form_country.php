@@ -25,12 +25,12 @@ use multipage\models\Country;
     ]
 ]) ?>
 
-<?= $form->field($model, 'region')->hiddenInput(['value' => '']) ?>
+<?= $form->field($model, 'region')->hiddenInput(['value' => ''])->label(false) ?>
 
-<?= $form->field($model, 'city')->hiddenInput(['value' => '']) ?>
+<?= $form->field($model, 'city')->hiddenInput(['value' => ''])->label(false) ?>
 
-<?= $form->field($model, 'query_name')->hiddenInput(['value' => '']) ?>
+<?= $form->field($model, 'query_name')->hiddenInput(['value' => ''])->label(false) ?>
 
-<?= $form->field($model, 'query_value')->hiddenInput(['value' => '']) ?>
+<?= $form->field($model, 'query_value')->hiddenInput(['value' => ''])->label(false) ?>
 
-<?= $form->field($model, 'operator')->hiddenInput(['value' => '']) ?>
+<?= $form->field($model, 'operator')->hiddenInput(['value' => ''])->label(false) ?>

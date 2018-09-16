@@ -31,8 +31,8 @@ $operator_list = $model->getList('operators');
     'style' => 'min-height: 100px'
 ]) ?>
 
-<?= $form->field($model, 'country')->hiddenInput(['value' => '']) ?>
+<?= $form->field($model, 'country')->hiddenInput(['value' => ''])->label(false) ?>
 
-<?= $form->field($model, 'region')->hiddenInput(['value' => '']) ?>
+<?= $form->field($model, 'region')->hiddenInput(['value' => ''])->label(false) ?>
 
-<?= $form->field($model, 'city')->hiddenInput(['value' => '']) ?>
+<?= $form->field($model, 'city')->hiddenInput(['value' => ''])->label(false) ?>

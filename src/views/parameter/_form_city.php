@@ -56,12 +56,12 @@ if (!empty($model->city)) {
     ]
 ]) ?>
 
-<?= $form->field($model, 'country')->hiddenInput(['value' => '']) ?>
+<?= $form->field($model, 'country')->hiddenInput(['value' => ''])->label(false) ?>
 
-<?= $form->field($model, 'region')->hiddenInput(['value' => '']) ?>
+<?= $form->field($model, 'region')->hiddenInput(['value' => ''])->label(false) ?>
 
-<?= $form->field($model, 'query_name')->hiddenInput(['value' => '']) ?>
+<?= $form->field($model, 'query_name')->hiddenInput(['value' => ''])->label(false) ?>
 
-<?= $form->field($model, 'query_value')->hiddenInput(['value' => '']) ?>
+<?= $form->field($model, 'query_value')->hiddenInput(['value' => ''])->label(false) ?>
 
-<?= $form->field($model, 'operator')->hiddenInput(['value' => '']) ?>
+<?= $form->field($model, 'operator')->hiddenInput(['value' => ''])->label(false) ?>
