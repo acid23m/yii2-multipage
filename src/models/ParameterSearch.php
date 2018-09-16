@@ -34,8 +34,8 @@ final class ParameterSearch extends Parameter
     public function rules(): array
     {
         return [
-            [['id', 'marker_id', 'operator'], 'integer'],
-            [['name', 'text', 'replacement'], 'safe'],
+            [['id', 'marker_id', 'type', 'operator'], 'integer'],
+            [['query_name', 'query_value', 'replacement'], 'safe'],
             [['status'], 'boolean']
         ];
     }
@@ -63,9 +63,9 @@ final class ParameterSearch extends Parameter
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-                'attributes' => ['id', 'marker_id', 'operator', 'name', 'status'],
+                'attributes' => ['id', 'marker_id', 'type', 'operator', 'query_name', 'status'],
                 'enableMultiSort' => true,
-                'defaultOrder' => ['name' => SORT_ASC]
+                'defaultOrder' => ['query_name' => SORT_ASC]
             ]
         ]);
 
@@ -80,12 +80,13 @@ final class ParameterSearch extends Parameter
         $query->andFilterWhere([
             'parameter.id' => $this->id,
             'parameter.marker_id' => $this->marker_id,
+            'parameter.type' => $this->type,
             'parameter.operator' => $this->operator,
             'parameter.status' => $this->status
         ]);
 
-        $query->andFilterWhere(['like', 'parameter.name', $this->name])
-            ->andFilterWhere(['like', 'parameter.text', $this->text])
+        $query->andFilterWhere(['like', 'parameter.query_name', $this->query_name])
+            ->andFilterWhere(['like', 'parameter.query_value', $this->query_value])
             ->andFilterWhere(['like', 'parameter.replacement', $this->replacement]);
 
         return $dataProvider;

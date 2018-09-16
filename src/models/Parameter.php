@@ -22,10 +22,14 @@ use yii\db\Connection;
  *
  * @property int $id
  * @property int $marker_id
- * @property string $name
- * @property int $operator
- * @property string $text
+ * @property int $type
+ * @property string $query_name
+ * @property string $query_value
+ * @property string $country
+ * @property string $region
+ * @property string $city
  * @property string $replacement
+ * @property int $operator
  * @property bool $status
  * @property string $created_at
  * @property string $updated_at
@@ -48,6 +52,11 @@ class Parameter extends ActiveRecord
     public const OPERATOR_EQUALLY = 10;
     public const OPERATOR_CONTAINS = 20;
 
+    public const TYPE_URL_QUERY = 10;
+    public const TYPE_GEO_COUNTRY = 20;
+    public const TYPE_GEO_REGION = 21;
+    public const TYPE_GEO_CITY = 22;
+
     /**
      * @var array
      */
@@ -56,6 +65,10 @@ class Parameter extends ActiveRecord
      * @var array
      */
     protected $operators;
+    /**
+     * @var array
+     */
+    protected $types;
 
     /**
      * {@inheritdoc}
@@ -87,6 +100,7 @@ class Parameter extends ActiveRecord
             'typecast' => [
                 'class' => AttributeTypecastBehavior::class,
                 'attributeTypes' => [
+                    'type' => AttributeTypecastBehavior::TYPE_INTEGER,
                     'operator' => AttributeTypecastBehavior::TYPE_INTEGER
                 ],
                 'typecastAfterFind' => true
@@ -100,17 +114,20 @@ class Parameter extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['name', 'text', 'replacement'], 'trim'],
-            [['marker_id', 'name', 'operator', 'text', 'status'], 'required'],
-            [['marker_id', 'operator'], 'integer'],
+            [['query_name', 'query_value', 'country', 'region', 'city', 'replacement'], 'trim'],
+            [['marker_id', 'type', 'status'], 'required'],
+            [['operator'], 'default', 'value' => self::OPERATOR_EQUALLY],
+            [['marker_id', 'type', 'operator'], 'integer'],
             [
                 ['marker_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetRelation' => 'marker'
             ],
-            [['name'], 'string', 'max' => 50],
-            [['text', 'replacement'], 'string'],
+            [['query_name', 'query_value', 'country', 'region', 'city'], 'default', 'value' => ''],
+            [['query_name'], 'string', 'max' => 50],
+            [['query_value', 'replacement'], 'string'],
+            [['country', 'region', 'city'], 'string', 'max' => 150],
             [['status'], 'boolean']
         ];
     }
@@ -123,10 +140,14 @@ class Parameter extends ActiveRecord
         return [
             'id' => 'ID',
             'marker_id' => \Yii::t('multipage', 'marker'),
-            'name' => \Yii::t('multipage', 'parameter'),
-            'operator' => \Yii::t('multipage', 'operator'),
-            'text' => \Yii::t('multipage', 'znachenie parametra'),
+            'type' => \Yii::t('multipage', 'istochnik'),
+            'query_name' => \Yii::t('multipage', 'parameter'),
+            'query_value' => \Yii::t('multipage', 'znachenie parametra'),
+            'country' => \Yii::t('multipage', 'strana'),
+            'region' => \Yii::t('multipage', 'region'),
+            'city' => \Yii::t('multipage', 'gorod'),
             'replacement' => \Yii::t('multipage', 'zamena markera'),
+            'operator' => \Yii::t('multipage', 'operator'),
             'status' => \Yii::t('multipage', 'status'),
             'created_at' => \Yii::t('multipage', 'data sozdania'),
             'updated_at' => \Yii::t('multipage', 'data obnovleniya')
@@ -148,6 +169,13 @@ class Parameter extends ActiveRecord
         $this->operators = [
             self::OPERATOR_EQUALLY => \Yii::t('multipage', 'ravno'),
             self::OPERATOR_CONTAINS => \Yii::t('multipage', 'soderzhit')
+        ];
+
+        $this->types = [
+            self::TYPE_URL_QUERY => \Yii::t('multipage', 'parameter'),
+            self::TYPE_GEO_COUNTRY => \Yii::t('multipage', 'strana'),
+            self::TYPE_GEO_REGION => \Yii::t('multipage', 'region'),
+            self::TYPE_GEO_CITY => \Yii::t('multipage', 'gorod')
         ];
     }
 

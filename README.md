@@ -1,6 +1,6 @@
 Multi-Page
 ==========
-Manage content on page that depends on URL query.
+Manage content on page that depends on URL query or Geo data.
 
 
 Installation
@@ -148,13 +148,22 @@ Markers has *name* and *default text*.
 if no rule matches.
 
 
-Parameters and Rules
---------------------
+Rules
+-----
 
 Markers are replaced by certain rules.
 Replacement rules consists of:
 
 - *marker*, e.g. `{{marker_str}}`.
+
+- *source type*, on the basis of what to do a replacement.
+
+- *replacement*. Markers will be replaced to this text if rule matches.
+It can be HTML content.
+
+Source types can be:
+
+**url parameters**:
 
 - *get-parameter*, e.g. `utm_content`.
 
@@ -163,8 +172,17 @@ The value of the *get-parameter* can exactly or partially coincide.
 
 - *parameter value*.
 
-- *replacement*. Markers will be replaced to this text
-if rule matches. It can be HTML content.
+**country**:
+
+- *country name*, e.g. "Germany"
+
+**region**:
+
+- *region name*, e.g. "Land Hessen"
+
+**city**:
+
+- *city name*, e.g. "Saint Petersburg"
 
 
 Examples
@@ -207,4 +225,21 @@ And finally for url `https://shop.com/item/123?utm_source=facebook` filtered tex
 
 ```
 Just call Us to order this Item. Congrats! You have personal 5% discount!
+```
+
+
+GeoIp component
+---------------
+
+You can use component to get geo data by user ip address.
+
+```php
+// current IP
+\Yii::$app->get('geoip')->getData();
+```
+
+or
+
+```php
+\Yii::$app->get('geoip')->getData('8.8.0.0');
 ```

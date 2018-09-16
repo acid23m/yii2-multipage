@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $status_list = $searchModel->getList('statuses');
 $operator_list = $searchModel->getList('operators');
+$type_list = $searchModel->getList('types');
 ?>
 
 <div class="parameter-index">
@@ -61,17 +62,26 @@ $operator_list = $searchModel->getList('operators');
                         },
                         'filter' => $marks
                     ],
-                    'name',
                     [
-                        'attribute' => 'operator',
+                        'attribute' => 'type',
                         'format' => 'html',
-                        'value' => function ($model, $key, $index) use ($operator_list) {
+                        'value' => function ($model, $key, $index) use ($type_list) {
                             /** @var Parameter $model */
-                            return $operator_list()[$model->operator];
+                            return $type_list()[$model->type];
                         },
-                        'filter' => $operator_list()
+                        'filter' => $type_list()
                     ],
-                    'text',
+//                    'query_name',
+//                    [
+//                        'attribute' => 'operator',
+//                        'format' => 'html',
+//                        'value' => function ($model, $key, $index) use ($operator_list) {
+//                            /** @var Parameter $model */
+//                            return $operator_list()[$model->operator];
+//                        },
+//                        'filter' => $operator_list()
+//                    ],
+//                    'query_value',
                     'replacement:raw',
                     [
                         'attribute' => 'status',

@@ -6,13 +6,29 @@
  * Time: 1:19
  */
 
+use multipage\models\City;
+use multipage\models\Country;
+use multipage\models\Region;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
 /** @var \multipage\models\Parameter $model */
 
-$this->title = $model->name;
+switch (\Yii::$app->language) {
+    case 'ru':
+        $lang = 'ru';
+        break;
+    case 'en':
+        $lang = 'en';
+        break;
+    default:
+        $lang = 'en';
+}
+
+$type_list = $model->getList('types');
+
+$this->title = $model->marker->name . ' - ' . ($type_list()[$model->type] ?? '');
 $this->params['title'] = $this->title;
 $this->params['breadcrumbs'][] = ['label' => \Yii::t('multipage', 'parametry'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -46,20 +62,43 @@ $operator_list = $model->getList('operators');
                         'attribute' => 'marker_id',
                         'format' => 'html',
                         'value' => $model->marker !== null
-                            ? Html::a($model->marker->name, ['marker/view', 'id' => $model->marker_id])
+                            ? '<strong>' . Html::a($model->marker->name,
+                                ['marker/view', 'id' => $model->marker_id]) . '</strong>'
                             : null
                     ],
                     [
-                        'attribute' => 'name',
+                        'attribute' => 'type',
+                        'value' => $type_list()[$model->type]
+                    ],
+                    [
+                        'attribute' => 'query_name',
                         'format' => 'html',
-                        'value' => Html::tag('strong', $model->name)
+                        'value' => Html::tag('strong', $model->query_name)
                     ],
                     [
                         'attribute' => 'operator',
                         'format' => 'html',
                         'value' => $operator_list()[$model->operator]
                     ],
-                    'text',
+                    'query_value',
+                    [
+                        'attribute' => 'country',
+                        'value' => !empty($model->country)
+                            ? Country::find()->select("name_$lang")->where(['iso' => $model->country])->scalar()
+                            : ''
+                    ],
+                    [
+                        'attribute' => 'region',
+                        'value' => !empty($model->region)
+                            ? Region::find()->select("name_$lang")->where(['iso' => $model->region])->scalar()
+                            : ''
+                    ],
+                    [
+                        'attribute' => 'city',
+                        'value' => !empty($model->city)
+                            ? City::find()->select("name_$lang")->where(['name_en' => $model->city])->scalar()
+                            : ''
+                    ],
                     'replacement:raw',
                     [
                         'attribute' => 'status',

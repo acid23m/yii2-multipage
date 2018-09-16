@@ -8,9 +8,13 @@
 
 namespace multipage\controllers;
 
+use multipage\models\City;
+use multipage\models\CountryQuery;
 use multipage\models\Marker;
 use multipage\models\Parameter;
 use multipage\models\ParameterSearch;
+use multipage\models\Region;
+use multipage\models\RegionQuery;
 use yii\base\InvalidArgumentException;
 use yii\db\IntegrityException;
 use yii\web\NotFoundHttpException;
@@ -25,6 +29,18 @@ use yii\web\View;
  */
 final class ParameterController extends BaseController
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors(): array
+    {
+        $behaviors = parent::behaviors();
+
+        $behaviors['verbs']['actions']['input-type'] = ['post'];
+
+        return $behaviors;
+    }
+
     /**
      * Lists all Parameter models.
      * @return string|View
@@ -141,6 +157,137 @@ final class ParameterController extends BaseController
         }
 
         throw new NotFoundHttpException(\Yii::t('multipage', 'zapis ne sushestvuet'));
+    }
+
+    /**
+     * Form inputs.
+     * @return string
+     */
+    public function actionTypeInput(): string
+    {
+        $request = \Yii::$app->getRequest();
+        if (!$request->getIsAjax()) {
+            return '';
+        }
+
+        /** @var int $type */
+        $type = (int) $request->post('type');
+        $form = unserialize(
+            base64_decode($request->post('form'))
+        );
+        /** @var Parameter $model */
+        $model = unserialize(
+            base64_decode($request->post('model'))
+        );
+
+        switch ($type) {
+            case $model::TYPE_URL_QUERY:
+                return $this->renderAjax('_form_url', compact('form', 'model'));
+            case $model::TYPE_GEO_COUNTRY:
+                return $this->renderAjax('_form_country', compact('form', 'model'));
+            case $model::TYPE_GEO_REGION:
+                return $this->renderAjax('_form_region', compact('form', 'model'));
+            case $model::TYPE_GEO_CITY:
+                return $this->renderAjax('_form_city', compact('form', 'model'));
+            default:
+                return '';
+        }
+    }
+
+    /**
+     * Find region for select box.
+     * @param null|string $q Search query
+     * @return array
+     */
+    public function actionSearchRegion($q = null): array
+    {
+        switch (\Yii::$app->language) {
+            case 'ru':
+                $lang = 'ru';
+                break;
+            case 'en':
+                $lang = 'en';
+                break;
+            default:
+                $lang = 'en';
+        }
+
+        /** @var array $out [result => [id => option, text => label]] */
+        $out = ['results' => []];
+
+        $data = Region::find()
+            ->with([
+                'country' => function (CountryQuery $query) {
+                    $query->addSelect(['id', 'name_ru', 'name_en']);
+                }
+            ])
+            ->select(['country_id', 'iso', 'name_ru', 'name_en'])
+            ->orFilterWhere(['like', 'iso', $q])
+            ->orFilterWhere(['like', 'name_ru', $q])
+            ->orFilterWhere(['like', 'name_en', $q])
+            ->limit(20)
+            ->all();
+
+        foreach ($data as &$item) {
+            $out['results'][] = [
+                'id' => $item->iso,
+                'text' => $item->{"name_$lang"} . ' (' . $item->country->{"name_$lang"} . ')'
+            ];
+        }
+        unset($data, $item);
+
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+
+        return $out;
+    }
+
+    /**
+     * Find city for select box.
+     * @param null|string $q Search query
+     * @return array
+     */
+    public function actionSearchCity($q = null): array
+    {
+        switch (\Yii::$app->language) {
+            case 'ru':
+                $lang = 'ru';
+                break;
+            case 'en':
+                $lang = 'en';
+                break;
+            default:
+                $lang = 'en';
+        }
+
+        /** @var array $out [result => [id => option, text => label]] */
+        $out = ['results' => []];
+
+        $data = City::find()
+            ->with([
+                'region' => function (RegionQuery $query) {
+                    $query->addSelect(['id', 'name_ru', 'name_en']);
+                },
+                'country' => function (CountryQuery $query) {
+                    $query->addSelect(['id', 'name_ru', 'name_en']);
+                }
+            ])
+            ->select(['region_id', 'country_id', 'name_ru', 'name_en'])
+            ->orFilterWhere(['like', 'name_ru', $q])
+            ->orFilterWhere(['like', 'name_en', $q])
+            ->limit(20)
+            ->all();
+
+        foreach ($data as &$item) {
+            $out['results'][] = [
+                'id' => $item->name_en,
+                'text' => $item->{"name_$lang"} . ' / ' . $item->region->{"name_$lang"} . ' (' . $item->country->{"name_$lang"} . ')'
+            ];
+        }
+        unset($data, $item);
+
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+
+        return $out;
     }
 
 }

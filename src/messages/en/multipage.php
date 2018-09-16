@@ -5,7 +5,7 @@ return [
     'marker' => 'Marker',
     'markery' => 'Markers for multi-page',
     'po umolchaniu' => 'Default Value',
-    'parameter' => 'Parameter',
+    'parameter' => 'URL Parameter',
     'parametry' => 'Parameters for multi-page',
     'operator' => 'Operator',
     'znachenie parametra' => 'Parameter Value (utm-label)',
@@ -29,5 +29,14 @@ return [
     'zapis obnovlena' => 'Item updated.',
     'zapis dobavlena' => 'Item added.',
     'markery eto' => 'Markers are code phrases in the text that will be replaced. Replacement occurs according to the <a href="{rules_link}">specified rules</a>. For replacement, you can use one word, several sentences, and html markup.',
-    'parametry eto' => 'Here are the rules for replacing <a href="{marker_link}">markers</a>, depending on the query parameters (utm-labels or other get-parameters) in the url.'
+    'parametry eto' => 'Here are the rules for replacing <a href="{marker_link}">markers</a>, depending on the query parameters (utm-labels or other get-parameters) in the url or geo location.',
+    'istochnik' => 'Source',
+    'strana' => 'Country',
+    'region' => 'Region',
+    'gorod' => 'City',
+    'continent' => 'Continent',
+    'nazvanie' => 'Name',
+    'shirota' => 'Latitude',
+    'dolgota' => 'Longitude',
+    'vrem zona' => 'Timezone'
 ];
