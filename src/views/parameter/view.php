@@ -83,21 +83,21 @@ $operator_list = $model->getList('operators');
                     ],
                     'query_value',
                     [
-                        'attribute' => 'country',
-                        'value' => !empty($model->country)
-                            ? Country::find()->select("name_$lang")->where(['iso' => $model->country])->scalar()
+                        'attribute' => 'country_id',
+                        'value' => $model->country_id !== null
+                            ? $model->country->{"name_$lang"}
                             : ''
                     ],
                     [
-                        'attribute' => 'region',
-                        'value' => !empty($model->region)
-                            ? Region::find()->select("name_$lang")->where(['iso' => $model->region])->scalar()
+                        'attribute' => 'region_id',
+                        'value' => $model->region_id !== null
+                            ? $model->region->{"name_$lang"}
                             : ''
                     ],
                     [
-                        'attribute' => 'city',
-                        'value' => !empty($model->city)
-                            ? City::find()->select("name_$lang")->where(['name_en' => $model->city])->scalar()
+                        'attribute' => 'city_id',
+                        'value' => $model->city_id !== null
+                            ? $model->city->{"name_$lang"}
                             : ''
                     ],
                     'replacement:raw',

@@ -22,6 +22,7 @@ use yii\helpers\ArrayHelper;
  *
  * @property Region $region
  * @property Country $country
+ * @property Parameter[] $parameters
  *
  * @package multipage\models
  */
@@ -122,6 +123,14 @@ class City extends ActiveRecord
     }
 
     /**
+     * @return ActiveQuery|ParameterQuery
+     */
+    public function getParameters()
+    {
+        return $this->hasMany(Parameter::class, ['city_id' => 'id'])->inverseOf('city');
+    }
+
+    /**
      * {@inheritdoc}
      * @return CityQuery the active query used by this AR class.
      */
@@ -146,7 +155,7 @@ class City extends ActiveRecord
                 $lang = 'en';
         }
 
-        return ArrayHelper::map(static::find()->with('country')->all(), 'name_en', "name_$lang", "country.name_$lang");
+        return ArrayHelper::map(static::find()->with('country')->all(), 'id', "name_$lang", "country.name_$lang");
     }
 
 }

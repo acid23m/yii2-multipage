@@ -26,9 +26,9 @@ use yii\db\Connection;
  * @property int $type
  * @property string $query_name
  * @property string $query_value
- * @property string $country
- * @property string $region
- * @property string $city
+ * @property int $country_id
+ * @property int $region_id
+ * @property int $city_id
  * @property string $replacement
  * @property int $operator
  * @property bool $status
@@ -36,6 +36,9 @@ use yii\db\Connection;
  * @property string $updated_at
  *
  * @property Marker $marker
+ * @property Country $country
+ * @property Region $region
+ * @property City $city
  *
  * @method void touch(string $attribute) Updates a timestamp attribute to the current timestamp
  *
@@ -115,23 +118,63 @@ class Parameter extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['language', 'query_name', 'query_value', 'country', 'region', 'city', 'replacement'], 'trim'],
+            [['language', 'query_name', 'query_value', 'replacement'], 'trim'],
             [['marker_id', 'type', 'status'], 'required'],
             [['operator'], 'default', 'value' => self::OPERATOR_EQUALLY],
-            [['marker_id', 'type', 'operator'], 'integer'],
+            [['marker_id', 'type', 'operator', 'country_id', 'region_id', 'city_id'], 'integer'],
             [
                 ['marker_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetRelation' => 'marker'
             ],
-            [['language', 'query_name', 'query_value', 'country', 'region', 'city'], 'default', 'value' => ''],
+            [['country_id', 'region_id', 'city_id'], 'default', 'value' => null],
+            [
+                ['country_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetRelation' => 'country'
+            ],
+            [
+                ['region_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetRelation' => 'region'
+            ],
+            [
+                ['city_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetRelation' => 'city'
+            ],
+            [['language', 'query_name', 'query_value'], 'default', 'value' => ''],
             [['language'], 'string', 'max' => 7],
             [['query_name'], 'string', 'max' => 50],
             [['query_value', 'replacement'], 'string'],
-            [['country', 'region', 'city'], 'string', 'max' => 150],
             [['status'], 'boolean']
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function beforeValidate(): bool
+    {
+        if (parent::beforeValidate()) {
+            // autofill geo attributes
+            if (!empty($this->city_id)) {
+                $city = City::find()->select(['country_id', 'region_id'])->where(['id' => (int) $this->city_id])->one();
+                $this->country_id = $city->country_id;
+                $this->region_id = $city->region_id;
+            }
+            if (!empty($this->region_id)) {
+                $this->country_id = Region::find()->select('country_id')->where(['id' => (int) $this->region_id])->scalar();
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -146,9 +189,9 @@ class Parameter extends ActiveRecord
             'type' => \Yii::t('multipage', 'istochnik'),
             'query_name' => \Yii::t('multipage', 'parameter'),
             'query_value' => \Yii::t('multipage', 'znachenie parametra'),
-            'country' => \Yii::t('multipage', 'strana'),
-            'region' => \Yii::t('multipage', 'region'),
-            'city' => \Yii::t('multipage', 'gorod'),
+            'country_id' => \Yii::t('multipage', 'strana'),
+            'region_id' => \Yii::t('multipage', 'region'),
+            'city_id' => \Yii::t('multipage', 'gorod'),
             'replacement' => \Yii::t('multipage', 'zamena markera'),
             'operator' => \Yii::t('multipage', 'operator'),
             'status' => \Yii::t('multipage', 'status'),
@@ -187,7 +230,31 @@ class Parameter extends ActiveRecord
      */
     public function getMarker()
     {
-        return $this->hasOne(Marker::class, ['id' => 'marker_id']);
+        return $this->hasOne(Marker::class, ['id' => 'marker_id'])->inverseOf('parameters');
+    }
+
+    /**
+     * @return ActiveQuery|CountryQuery
+     */
+    public function getCountry()
+    {
+        return $this->hasOne(Country::class, ['id' => 'country_id'])->inverseOf('parameters');
+    }
+
+    /**
+     * @return ActiveQuery|RegionQuery
+     */
+    public function getRegion()
+    {
+        return $this->hasOne(Region::class, ['id' => 'region_id'])->inverseOf('parameters');
+    }
+
+    /**
+     * @return ActiveQuery|CityQuery
+     */
+    public function getCity()
+    {
+        return $this->hasOne(City::class, ['id' => 'city_id'])->inverseOf('parameters');
     }
 
     /**

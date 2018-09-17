@@ -14,7 +14,7 @@ use multipage\models\Country;
 /** @var \yii\bootstrap\ActiveForm $form */
 ?>
 
-<?= $form->field($model, 'country')->widget(Select2::class, [
+<?= $form->field($model, 'country_id')->widget(Select2::class, [
     'data' => Country::getDropdownList(),
     'theme' => Select2::THEME_BOOTSTRAP,
     'options' => [
@@ -25,9 +25,9 @@ use multipage\models\Country;
     ]
 ]) ?>
 
-<?= $form->field($model, 'region')->hiddenInput(['value' => ''])->label(false) ?>
+<?= $form->field($model, 'region_id')->hiddenInput(['value' => ''])->label(false) ?>
 
-<?= $form->field($model, 'city')->hiddenInput(['value' => ''])->label(false) ?>
+<?= $form->field($model, 'city_id')->hiddenInput(['value' => ''])->label(false) ?>
 
 <?= $form->field($model, 'query_name')->hiddenInput(['value' => ''])->label(false) ?>
 

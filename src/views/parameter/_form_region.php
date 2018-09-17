@@ -27,16 +27,17 @@ switch (\Yii::$app->language) {
 }
 
 $init_value = '';
-if (!empty($model->region)) {
+if ($model->region_id !== null) {
     $region = Region::find()
         ->with('country')
-        ->where(['iso' => $model->region])
+        ->where(['id' => $model->region_id])
         ->one();
+
     $init_value = $region->{"name_$lang"} . ' (' . $region->country->{"name_$lang"} . ')';
 }
 ?>
 
-<?= $form->field($model, 'region')->widget(Select2::class, [
+<?= $form->field($model, 'region_id')->widget(Select2::class, [
     'initValueText' => $init_value,
     'theme' => Select2::THEME_BOOTSTRAP,
     'options' => [
@@ -56,9 +57,9 @@ if (!empty($model->region)) {
     ]
 ]) ?>
 
-<?= $form->field($model, 'country')->hiddenInput(['value' => ''])->label(false) ?>
+<?= $form->field($model, 'country_id')->hiddenInput(['value' => ''])->label(false) ?>
 
-<?= $form->field($model, 'city')->hiddenInput(['value' => ''])->label(false) ?>
+<?= $form->field($model, 'city_id')->hiddenInput(['value' => ''])->label(false) ?>
 
 <?= $form->field($model, 'query_name')->hiddenInput(['value' => ''])->label(false) ?>
 

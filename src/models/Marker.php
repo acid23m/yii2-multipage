@@ -125,7 +125,7 @@ class Marker extends ActiveRecord
      */
     public function getParameters()
     {
-        return $this->hasMany(Parameter::class, ['marker_id' => 'id']);
+        return $this->hasMany(Parameter::class, ['marker_id' => 'id'])->inverseOf('marker');
     }
 
     /**

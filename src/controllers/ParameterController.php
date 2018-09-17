@@ -218,19 +218,19 @@ final class ParameterController extends BaseController
         $data = Region::find()
             ->with([
                 'country' => function (CountryQuery $query) {
-                    $query->addSelect(['id', 'name_ru', 'name_en']);
+                    $query->addSelect(['country.id', 'country.name_ru', 'country.name_en']);
                 }
             ])
-            ->select(['country_id', 'iso', 'name_ru', 'name_en'])
-            ->orFilterWhere(['like', 'iso', $q])
-            ->orFilterWhere(['like', 'name_ru', $q])
-            ->orFilterWhere(['like', 'name_en', $q])
+            ->select(['region.id', 'region.country_id', 'region.iso', 'region.name_ru', 'region.name_en'])
+            ->orFilterWhere(['like', 'region.iso', $q])
+            ->orFilterWhere(['like', 'region.name_ru', $q])
+            ->orFilterWhere(['like', 'region.name_en', $q])
             ->limit(20)
             ->all();
 
         foreach ($data as &$item) {
             $out['results'][] = [
-                'id' => $item->iso,
+                'id' => $item->id,
                 'text' => $item->{"name_$lang"} . ' (' . $item->country->{"name_$lang"} . ')'
             ];
         }
@@ -265,21 +265,21 @@ final class ParameterController extends BaseController
         $data = City::find()
             ->with([
                 'region' => function (RegionQuery $query) {
-                    $query->addSelect(['id', 'name_ru', 'name_en']);
+                    $query->addSelect(['region.id', 'region.name_ru', 'region.name_en']);
                 },
                 'country' => function (CountryQuery $query) {
-                    $query->addSelect(['id', 'name_ru', 'name_en']);
+                    $query->addSelect(['country.id', 'country.name_ru', 'country.name_en']);
                 }
             ])
-            ->select(['region_id', 'country_id', 'name_ru', 'name_en'])
-            ->orFilterWhere(['like', 'name_ru', $q])
-            ->orFilterWhere(['like', 'name_en', $q])
+            ->select(['city.id', 'city.region_id', 'city.country_id', 'city.name_ru', 'city.name_en'])
+            ->orFilterWhere(['like', 'city.name_ru', $q])
+            ->orFilterWhere(['like', 'city.name_en', $q])
             ->limit(20)
             ->all();
 
         foreach ($data as &$item) {
             $out['results'][] = [
-                'id' => $item->name_en,
+                'id' => $item->id,
                 'text' => $item->{"name_$lang"} . ' / ' . $item->region->{"name_$lang"} . ' (' . $item->country->{"name_$lang"} . ')'
             ];
         }

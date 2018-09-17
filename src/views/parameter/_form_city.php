@@ -27,16 +27,16 @@ switch (\Yii::$app->language) {
 }
 
 $init_value = '';
-if (!empty($model->city)) {
+if ($model->city_id !== null) {
     $city = City::find()
         ->with(['country', 'region'])
-        ->where(['name_en' => $model->city])
+        ->where(['id' => $model->city_id])
         ->one();
     $init_value = $city->{"name_$lang"} . ' / ' . $city->region->{"name_$lang"} . ' (' . $city->country->{"name_$lang"} . ')';
 }
 ?>
 
-<?= $form->field($model, 'city')->widget(Select2::class, [
+<?= $form->field($model, 'city_id')->widget(Select2::class, [
     'initValueText' => $init_value,
     'theme' => Select2::THEME_BOOTSTRAP,
     'options' => [
@@ -56,9 +56,9 @@ if (!empty($model->city)) {
     ]
 ]) ?>
 
-<?= $form->field($model, 'country')->hiddenInput(['value' => ''])->label(false) ?>
+<?= $form->field($model, 'country_id')->hiddenInput(['value' => ''])->label(false) ?>
 
-<?= $form->field($model, 'region')->hiddenInput(['value' => ''])->label(false) ?>
+<?= $form->field($model, 'region_id')->hiddenInput(['value' => ''])->label(false) ?>
 
 <?= $form->field($model, 'query_name')->hiddenInput(['value' => ''])->label(false) ?>
 

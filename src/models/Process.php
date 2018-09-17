@@ -86,7 +86,7 @@ class Process
                     break;
 
                 case $rule::TYPE_GEO_COUNTRY:
-                    $country_iso = $rule->country; // country iso code to find
+                    $country_id = $rule->country_id; // country id to find
                     // current country
                     try {
                         [$country_now, ,] = $geoip->getData();
@@ -94,15 +94,15 @@ class Process
                         $country_now = null;
                     }
 
-                    if (!empty($country_iso) && $country_now !== null && $country_iso === $country_now['iso'] && $is_language_suitable) {
+                    if (!empty($country_id) && $country_now !== null && $country_id === $country_now['id'] && $is_language_suitable) {
                         // replace marker with certain value
                         $text = \str_replace($marker_name, $marker_replacement, $text);
                     }
-                    unset($country_iso, $country_now);
+                    unset($country_id, $country_now);
                     break;
 
                 case $rule::TYPE_GEO_REGION:
-                    $region_iso = $rule->region; // region iso code to find
+                    $region_id = $rule->region_id; // region id to find
                     // current region
                     try {
                         [, $region_now,] = $geoip->getData();
@@ -110,15 +110,15 @@ class Process
                         $region_now = null;
                     }
 
-                    if (!empty($region_iso) && $region_now !== null && $region_iso === $region_now['iso'] && $is_language_suitable) {
+                    if (!empty($region_id) && $region_now !== null && $region_id === $region_now['id'] && $is_language_suitable) {
                         // replace marker with certain value
                         $text = \str_replace($marker_name, $marker_replacement, $text);
                     }
-                    unset($region_iso, $region_now);
+                    unset($region_id, $region_now);
                     break;
 
                 case $rule::TYPE_GEO_CITY:
-                    $city = $rule->city; // city name to find
+                    $city_id = $rule->city_id; // city id to find
                     // current city
                     try {
                         [, , $city_now] = $geoip->getData();
@@ -126,11 +126,11 @@ class Process
                         $city_now = null;
                     }
 
-                    if (!empty($city) && $city_now !== null && $city === $city_now['name_en'] && $is_language_suitable) {
+                    if (!empty($city_id) && $city_now !== null && $city_id === $city_now['id'] && $is_language_suitable) {
                         // replace marker with certain value
                         $text = \str_replace($marker_name, $marker_replacement, $text);
                     }
-                    unset($city, $city_now);
+                    unset($city_id, $city_now);
                     break;
             }
         }
