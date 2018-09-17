@@ -8,6 +8,8 @@
 
 use kartik\select2\Select2;
 use multipage\models\City;
+use multipage\models\GeoUpdater;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\JsExpression;
 
@@ -15,16 +17,7 @@ use yii\web\JsExpression;
 /** @var \multipage\models\Parameter $model */
 /** @var \yii\bootstrap\ActiveForm $form */
 
-switch (\Yii::$app->language) {
-    case 'ru':
-        $lang = 'ru';
-        break;
-    case 'en':
-        $lang = 'en';
-        break;
-    default:
-        $lang = 'en';
-}
+$lang = GeoUpdater::getGeoInfoLanguage();
 
 $init_value = '';
 if ($model->city_id !== null) {
@@ -54,7 +47,10 @@ if ($model->city_id !== null) {
         'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
         'allowClear' => true
     ]
-]) ?>
+])->hint(
+    \Yii::t('multipage', 'registro zavisimiy vvod') .
+    ' ' . Html::a(\Yii::t('multipage', 'spisok gorodov'), ['city/index'])
+) ?>
 
 <?= $form->field($model, 'country_id')->hiddenInput(['value' => ''])->label(false) ?>
 

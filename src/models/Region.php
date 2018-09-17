@@ -118,16 +118,7 @@ class Region extends ActiveRecord
      */
     public static function getDropdownList(): array
     {
-        switch (\Yii::$app->language) {
-            case 'ru':
-                $lang = 'ru';
-                break;
-            case 'en':
-                $lang = 'en';
-                break;
-            default:
-                $lang = 'en';
-        }
+        $lang = GeoUpdater::getGeoInfoLanguage();
 
         return ArrayHelper::map(static::find()->with('country')->all(), 'id', "name_$lang", "country.name_$lang");
     }

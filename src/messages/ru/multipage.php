@@ -32,12 +32,22 @@ return [
     'parametry eto' => 'Здесь указаны правила замены <a href="{marker_link}">маркеров</a> в зависимости от параметров запроса (utm-меток или других get-параметров) в url или гео локации.',
     'istochnik' => 'Источник',
     'strana' => 'Страна',
+    'strany' => 'Страны',
+    'spisok stran' => 'Список стран',
     'region' => 'Регион',
+    'regiony' => 'Регионы',
+    'spisok regionov' => 'Список регионов',
     'gorod' => 'Город',
+    'goroda' => 'Города',
+    'spisok gorodov' => 'Список городов',
     'continent' => 'Континент',
     'nazvanie' => 'Название',
     'shirota' => 'Широта',
     'dolgota' => 'Долгота',
     'vrem zona' => 'Временная зона',
-    'yazyk' => 'Язык'
+    'yazyk' => 'Язык',
+    'zapis ne sushestvuet' => 'Запись не найдена.',
+    'obnovit info' => 'Обновить информацию',
+    'gotovo' => 'Готово.',
+    'registro zavisimiy vvod' => 'Регистро-зависимый ввод.'
 ];

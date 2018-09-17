@@ -8,6 +8,7 @@
 
 use kartik\select2\Select2;
 use multipage\models\Country;
+use yii\helpers\Html;
 
 /** @var \yii\web\View $this */
 /** @var \multipage\models\Parameter $model */
@@ -23,7 +24,7 @@ use multipage\models\Country;
     'pluginOptions' => [
         'allowClear' => true
     ]
-]) ?>
+])->hint(Html::a(\Yii::t('multipage', 'spisok stran'), ['country/index'])) ?>
 
 <?= $form->field($model, 'region_id')->hiddenInput(['value' => ''])->label(false) ?>
 

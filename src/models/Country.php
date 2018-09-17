@@ -136,16 +136,7 @@ class Country extends ActiveRecord
      */
     public static function getDropdownList(): array
     {
-        switch (\Yii::$app->language) {
-            case 'ru':
-                $lang = 'ru';
-                break;
-            case 'en':
-                $lang = 'en';
-                break;
-            default:
-                $lang = 'en';
-        }
+        $lang = GeoUpdater::getGeoInfoLanguage();
 
         return ArrayHelper::map(static::find()->all(), 'id', "name_$lang");
     }

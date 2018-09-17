@@ -391,4 +391,21 @@ class GeoUpdater
         return true;
     }
 
+    /**
+     * Define language postfix for names which depends on current locale.
+     * @return string
+     */
+    public static function getGeoInfoLanguage(): string
+    {
+        switch (\Yii::$app->language) {
+            case 'ru':
+                return 'ru';
+            case 'en':
+                return 'en';
+                break;
+            default:
+                return 'en';
+        }
+    }
+
 }

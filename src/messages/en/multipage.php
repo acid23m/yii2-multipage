@@ -32,12 +32,22 @@ return [
     'parametry eto' => 'Here are the rules for replacing <a href="{marker_link}">markers</a>, depending on the query parameters (utm-labels or other get-parameters) in the url or geo location.',
     'istochnik' => 'Source',
     'strana' => 'Country',
+    'strany' => 'Countries',
+    'spisok stran' => 'Countries List',
     'region' => 'Region',
+    'regiony' => 'Regions',
+    'spisok regionov' => 'Regions List',
     'gorod' => 'City',
+    'goroda' => 'Cities',
+    'spisok gorodov' => 'Cities List',
     'continent' => 'Continent',
     'nazvanie' => 'Name',
     'shirota' => 'Latitude',
     'dolgota' => 'Longitude',
     'vrem zona' => 'Timezone',
-    'yazyk' => 'Language'
+    'yazyk' => 'Language',
+    'zapis ne sushestvuet' => 'Record not found.',
+    'obnovit info' => 'Update Information',
+    'gotovo' => 'Done.',
+    'registro zavisimiy vvod' => 'Case-sensitive input.'
 ];

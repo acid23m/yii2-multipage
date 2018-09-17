@@ -54,8 +54,7 @@ $type_list = $searchModel->getList('types');
                     [
                         'attribute' => 'marker_id',
                         'format' => 'html',
-                        'value' => function ($model, $key, $index) {
-                            /** @var Parameter $model */
+                        'value' => function (Parameter $model, $key, $index) {
                             return $model->marker !== null
                                 ? Html::a($model->marker->name, ['marker/view', 'id' => $model->marker_id])
                                 : null;
@@ -65,8 +64,7 @@ $type_list = $searchModel->getList('types');
                     [
                         'attribute' => 'type',
                         'format' => 'html',
-                        'value' => function ($model, $key, $index) use ($type_list) {
-                            /** @var Parameter $model */
+                        'value' => function (Parameter $model, $key, $index) use ($type_list) {
                             return $type_list()[$model->type];
                         },
                         'filter' => $type_list()
@@ -75,8 +73,7 @@ $type_list = $searchModel->getList('types');
 //                    [
 //                        'attribute' => 'operator',
 //                        'format' => 'html',
-//                        'value' => function ($model, $key, $index) use ($operator_list) {
-//                            /** @var Parameter $model */
+//                        'value' => function (Parameter $model, $key, $index) use ($operator_list) {
 //                            return $operator_list()[$model->operator];
 //                        },
 //                        'filter' => $operator_list()
@@ -85,8 +82,7 @@ $type_list = $searchModel->getList('types');
                     'replacement:raw',
                     [
                         'attribute' => 'status',
-                        'value' => function ($model, $key, $index) use ($status_list) {
-                            /** @var Parameter $model */
+                        'value' => function (Parameter $model, $key, $index) use ($status_list) {
                             return $status_list()[$model->status];
                         },
                         'filter' => $status_list()

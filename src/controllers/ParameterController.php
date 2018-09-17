@@ -10,6 +10,7 @@ namespace multipage\controllers;
 
 use multipage\models\City;
 use multipage\models\CountryQuery;
+use multipage\models\GeoUpdater;
 use multipage\models\Marker;
 use multipage\models\Parameter;
 use multipage\models\ParameterSearch;
@@ -201,16 +202,7 @@ final class ParameterController extends BaseController
      */
     public function actionSearchRegion($q = null): array
     {
-        switch (\Yii::$app->language) {
-            case 'ru':
-                $lang = 'ru';
-                break;
-            case 'en':
-                $lang = 'en';
-                break;
-            default:
-                $lang = 'en';
-        }
+        $lang = GeoUpdater::getGeoInfoLanguage();
 
         /** @var array $out [result => [id => option, text => label]] */
         $out = ['results' => []];
@@ -248,16 +240,7 @@ final class ParameterController extends BaseController
      */
     public function actionSearchCity($q = null): array
     {
-        switch (\Yii::$app->language) {
-            case 'ru':
-                $lang = 'ru';
-                break;
-            case 'en':
-                $lang = 'en';
-                break;
-            default:
-                $lang = 'en';
-        }
+        $lang = GeoUpdater::getGeoInfoLanguage();
 
         /** @var array $out [result => [id => option, text => label]] */
         $out = ['results' => []];

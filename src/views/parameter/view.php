@@ -6,25 +6,14 @@
  * Time: 1:19
  */
 
-use multipage\models\City;
-use multipage\models\Country;
-use multipage\models\Region;
+use multipage\models\GeoUpdater;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
 /** @var \multipage\models\Parameter $model */
 
-switch (\Yii::$app->language) {
-    case 'ru':
-        $lang = 'ru';
-        break;
-    case 'en':
-        $lang = 'en';
-        break;
-    default:
-        $lang = 'en';
-}
+$lang = GeoUpdater::getGeoInfoLanguage();
 
 $type_list = $model->getList('types');
 

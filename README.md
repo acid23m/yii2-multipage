@@ -247,3 +247,11 @@ or
 ```php
 \Yii::$app->get('geoip')->getData('8.8.0.0');
 ```
+
+Grid wit locations can be found here:
+
+- `multipage/country/index` - list of countries.
+
+- `multipage/region/index` - list of regions.
+
+- `multipage/city/index` - list of cities.
