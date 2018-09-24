@@ -8,14 +8,9 @@
 
 namespace multipage\controllers;
 
-use multipage\models\City;
-use multipage\models\CountryQuery;
-use multipage\models\GeoUpdater;
 use multipage\models\Marker;
 use multipage\models\Parameter;
 use multipage\models\ParameterSearch;
-use multipage\models\Region;
-use multipage\models\RegionQuery;
 use yii\base\InvalidArgumentException;
 use yii\db\IntegrityException;
 use yii\web\NotFoundHttpException;
@@ -193,84 +188,6 @@ final class ParameterController extends BaseController
             default:
                 return '';
         }
-    }
-
-    /**
-     * Find region for select box.
-     * @param null|string $q Search query
-     * @return array
-     */
-    public function actionSearchRegion($q = null): array
-    {
-        $lang = GeoUpdater::getGeoInfoLanguage();
-
-        /** @var array $out [result => [id => option, text => label]] */
-        $out = ['results' => []];
-
-        $data = Region::find()
-            ->with([
-                'country' => function (CountryQuery $query) {
-                    $query->addSelect(['country.id', 'country.name_ru', 'country.name_en']);
-                }
-            ])
-            ->select(['region.id', 'region.country_id', 'region.iso', 'region.name_ru', 'region.name_en'])
-            ->orFilterWhere(['like', 'region.iso', $q])
-            ->orFilterWhere(['like', 'region.name_ru', $q])
-            ->orFilterWhere(['like', 'region.name_en', $q])
-            ->limit(20)
-            ->all();
-
-        foreach ($data as &$item) {
-            $out['results'][] = [
-                'id' => $item->id,
-                'text' => $item->{"name_$lang"} . ' (' . $item->country->{"name_$lang"} . ')'
-            ];
-        }
-        unset($data, $item);
-
-        \Yii::$app->response->format = Response::FORMAT_JSON;
-
-        return $out;
-    }
-
-    /**
-     * Find city for select box.
-     * @param null|string $q Search query
-     * @return array
-     */
-    public function actionSearchCity($q = null): array
-    {
-        $lang = GeoUpdater::getGeoInfoLanguage();
-
-        /** @var array $out [result => [id => option, text => label]] */
-        $out = ['results' => []];
-
-        $data = City::find()
-            ->with([
-                'region' => function (RegionQuery $query) {
-                    $query->addSelect(['region.id', 'region.name_ru', 'region.name_en']);
-                },
-                'country' => function (CountryQuery $query) {
-                    $query->addSelect(['country.id', 'country.name_ru', 'country.name_en']);
-                }
-            ])
-            ->select(['city.id', 'city.region_id', 'city.country_id', 'city.name_ru', 'city.name_en'])
-            ->orFilterWhere(['like', 'city.name_ru', $q])
-            ->orFilterWhere(['like', 'city.name_en', $q])
-            ->limit(20)
-            ->all();
-
-        foreach ($data as &$item) {
-            $out['results'][] = [
-                'id' => $item->id,
-                'text' => $item->{"name_$lang"} . ' / ' . $item->region->{"name_$lang"} . ' (' . $item->country->{"name_$lang"} . ')'
-            ];
-        }
-        unset($data, $item);
-
-        \Yii::$app->response->format = Response::FORMAT_JSON;
-
-        return $out;
     }
 
 }

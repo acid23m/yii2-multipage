@@ -16,7 +16,9 @@ namespace multipage;
  */
 final class Module extends \yii\base\Module
 {
+    public const DEFAULT_ID = 'multipage';
     public const DB_NAME = 'dbMultiPage';
+    public const GEOIP_COMPONENT_ID = 'geoip';
 
     /**
      * {@inheritdoc}

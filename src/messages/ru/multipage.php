@@ -49,5 +49,11 @@ return [
     'zapis ne sushestvuet' => 'Запись не найдена.',
     'obnovit info' => 'Обновить информацию',
     'gotovo' => 'Готово.',
-    'registro zavisimiy vvod' => 'Регистро-зависимый ввод.'
+    'registro zavisimiy vvod' => 'Регистро-зависимый ввод.',
+    'vybrat mestopolozhenie' => 'Выбрать местоположение',
+    'vasha strana' => 'Ваша страна',
+    'vash region' => 'Ваш регион',
+    'vash gorod' => 'Ваш город',
+    'primenit' => 'Применить',
+    'zakrit' => 'Закрыть'
 ];

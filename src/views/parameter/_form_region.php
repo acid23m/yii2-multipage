@@ -39,7 +39,7 @@ if ($model->region_id !== null) {
     'pluginOptions' => [
         'minimumInputLength' => 2,
         'ajax' => [
-            'url' => Url::to(['parameter/search-region']),
+            'url' => Url::to(['location/search-region']),
             'dataType' => 'json',
             'delay' => 2000,
             'cache' => true,

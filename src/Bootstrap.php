@@ -57,7 +57,7 @@ final class Bootstrap implements BootstrapInterface
             \Yii::configure($app, [
                 'components' => [
                     // define country, region and city by ip
-                    'geoip' => [
+                    \multipage\Module::GEOIP_COMPONENT_ID => [
                         'class' => GeoIp::class
                     ]
                 ]

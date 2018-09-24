@@ -49,5 +49,11 @@ return [
     'zapis ne sushestvuet' => 'Record not found.',
     'obnovit info' => 'Update Information',
     'gotovo' => 'Done.',
-    'registro zavisimiy vvod' => 'Case-sensitive input.'
+    'registro zavisimiy vvod' => 'Case-sensitive input.',
+    'vybrat mestopolozhenie' => 'Select location',
+    'vasha strana' => 'Your country',
+    'vash region' => 'Your region',
+    'vash gorod' => 'Your city',
+    'primenit' => 'Apply',
+    'zakrit' => 'Close'
 ];

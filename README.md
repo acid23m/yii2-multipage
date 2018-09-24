@@ -32,7 +32,7 @@ Add module in `backend/config/main.php`.
 
 ```php
 'module' => [
-    'multipage' => [
+    \multipage\Module::DEFAULT_ID => [
         'class' => \multipage\Module::class,
         'layout' => '@backend/views/layouts/main.php'
     ]
@@ -239,13 +239,13 @@ You can use component to get geo data by user ip address.
 
 ```php
 // current IP
-\Yii::$app->get('geoip')->getData();
+\Yii::$app->get(\multipage\Module::GEOIP_COMPONENT_ID)->getIpData();
 ```
 
 or
 
 ```php
-\Yii::$app->get('geoip')->getData('8.8.0.0');
+\Yii::$app->get('geoip')->getIpData('8.8.0.0');
 ```
 
 Grid wit locations can be found here:

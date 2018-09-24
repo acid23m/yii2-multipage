@@ -38,7 +38,7 @@ if ($model->city_id !== null) {
     'pluginOptions' => [
         'minimumInputLength' => 2,
         'ajax' => [
-            'url' => Url::to(['parameter/search-city']),
+            'url' => Url::to(['location/search-city']),
             'dataType' => 'json',
             'delay' => 2000,
             'cache' => true,

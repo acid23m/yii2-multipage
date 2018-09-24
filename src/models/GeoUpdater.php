@@ -402,7 +402,6 @@ class GeoUpdater
                 return 'ru';
             case 'en':
                 return 'en';
-                break;
             default:
                 return 'en';
         }
