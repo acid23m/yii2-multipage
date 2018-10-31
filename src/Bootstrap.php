@@ -10,6 +10,7 @@ namespace multipage;
 
 use multipage\components\GeoIp;
 use multipage\models\GeoUpdater;
+use multipage\models\GeoUpdaterJob;
 use yii\base\BootstrapInterface;
 use yii\base\Event;
 use yii\db\Connection;
@@ -33,6 +34,9 @@ final class Bootstrap implements BootstrapInterface
      */
     public function bootstrap($app): void
     {
+        /** @var \yii\queue\Queue $queue */
+        $queue = \Yii::$app->get('queue', false);
+
         \Yii::configure($app, [
             'components' => [
                 // configure db
@@ -160,13 +164,21 @@ SQL
             chmod($multipage_db_file, 0664);
 
             // update geo data
-            GeoUpdater::getInfo();
+            if ($queue instanceof \yii\queue\Queue) {
+                $queue->push(new GeoUpdaterJob(['type' => GeoUpdaterJob::TYPE_INFO]));
+            } else {
+                GeoUpdater::getInfo();
+            }
         }
 
         // check sxgeo data
         $sxgeo_data_file = \Yii::getAlias(GeoUpdater::DATA_DIR . '/' . GeoIp::DB_FILE);
         if (!file_exists($sxgeo_data_file)) {
-            GeoUpdater::getData();
+            if ($queue instanceof \yii\queue\Queue) {
+                $queue->push(new GeoUpdaterJob(['type' => GeoUpdaterJob::TYPE_DATA]));
+            } else {
+                GeoUpdater::getData();
+            }
         }
     }
 
