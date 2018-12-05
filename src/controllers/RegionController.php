@@ -39,7 +39,7 @@ final class RegionController extends BaseController
         $dataProvider = $searchModel->search(\Yii::$app->getRequest()->getQueryParams());
 
 
-        return $this->render('index', compact('searchModel', 'dataProvider'));
+        return $this->render('index', \compact('searchModel', 'dataProvider'));
     }
 
     /**

@@ -9,11 +9,11 @@ use yii\helpers\Html;
 /** @var \multipage\models\CountrySearch $searchModel */
 /** @var \yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('multipage', 'strany');
+$this->title = \Yii::t('multipage', 'strany');
 $this->params['title'] = $this->title;
 $this->params['breadcrumbs'][] = $this->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('multipage', 'regiony'), 'url' => ['region/index']];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('multipage', 'goroda'), 'url' => ['city/index']];
+$this->params['breadcrumbs'][] = ['label' => \Yii::t('multipage', 'regiony'), 'url' => ['region/index']];
+$this->params['breadcrumbs'][] = ['label' => \Yii::t('multipage', 'goroda'), 'url' => ['city/index']];
 ?>
 
 <div class="country-index">

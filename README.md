@@ -11,13 +11,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```bash
-php composer.phar require --prefer-dist acid23m/yii2-multipage "dev-master"
+php composer.phar require --prefer-dist acid23m/yii2-multipage "~2.0"
 ```
 
 or add
 
 ```
-"acid23m/yii2-multipage": "dev-master"
+"acid23m/yii2-multipage": "~2.0"
 ```
 
 to the require section of your `composer.json` file.

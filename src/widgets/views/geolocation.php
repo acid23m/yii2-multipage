@@ -109,8 +109,7 @@ switch ($widget->question) {
 $link_text = $widget->getLocation()[$index]["name_$lang"] ?? \Yii::t('multipage', 'vybrat mestopolozhenie');
 ?>
 
-<?php
-$this->registerCss('
+<?php $this->registerCss('
 #geolocation-select-box {
     box-sizing: border-box;
     position: absolute;
@@ -168,11 +167,9 @@ $this->registerCss('
     color: #333;
     text-decoration: none;
 }
-', [], 'gl_css')
-?>
+', [], 'gl_css') ?>
 
-<?php
-$this->registerJs('
+<?php $this->registerJs('
 (function (d) {
     "use strict";
     
@@ -198,8 +195,7 @@ $this->registerJs('
         }, false);
     })
 })(document);
-', $this::POS_END, 'gl_js')
-?>
+', $this::POS_END, 'gl_js') ?>
 
 
 <span class="geolocation-current">

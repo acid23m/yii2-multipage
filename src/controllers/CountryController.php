@@ -38,7 +38,7 @@ final class CountryController extends BaseController
         $searchModel = new CountrySearch;
         $dataProvider = $searchModel->search(\Yii::$app->getRequest()->getQueryParams());
 
-        return $this->render('index', compact('searchModel', 'dataProvider'));
+        return $this->render('index', \compact('searchModel', 'dataProvider'));
     }
 
     /**

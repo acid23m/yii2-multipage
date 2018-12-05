@@ -18,12 +18,13 @@ trait DateTime
 {
     /**
      * @return string Current time
+     * @throws \Exception
      */
     public static function getNow(): string
     {
         $now = new \DateTime('now', new \DateTimeZone(\Yii::$app->timeZone));
 
-        return $now->format(STANDARD_DATETIME_FORMAT);
+        return $now->format('Y-m-d H:i:s');
     }
 
 }

@@ -76,7 +76,7 @@ final class Bootstrap implements BootstrapInterface
         // check multipage data
         $multipage_db_file = \Yii::getAlias('@common/data/multipagedata.db');
 
-        if (!file_exists($multipage_db_file)) {
+        if (!\file_exists($multipage_db_file)) {
             FileHelper::createDirectory(\Yii::getAlias('@common/data'));
             $multipage_db = new \SQLite3($multipage_db_file);
 
@@ -161,7 +161,7 @@ SQL
             $multipage_db->exec('CREATE INDEX "idx_parameter_marker_id" ON "parameter" ("marker_id");');
             $multipage_db->exec('CREATE INDEX "idx_parameter_status" ON "parameter" ("status");');
 
-            chmod($multipage_db_file, 0664);
+            \chmod($multipage_db_file, 0664);
 
             // update geo data
             if ($queue instanceof \yii\queue\Queue) {
@@ -173,7 +173,7 @@ SQL
 
         // check sxgeo data
         $sxgeo_data_file = \Yii::getAlias(GeoUpdater::DATA_DIR . '/' . GeoIp::DB_FILE);
-        if (!file_exists($sxgeo_data_file)) {
+        if (!\file_exists($sxgeo_data_file)) {
             if ($queue instanceof \yii\queue\Queue) {
                 $queue->push(new GeoUpdaterJob(['type' => GeoUpdaterJob::TYPE_DATA]));
             } else {

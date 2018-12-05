@@ -13,11 +13,11 @@ use yii\helpers\Html;
 
 $lang = GeoUpdater::getGeoInfoLanguage();
 
-$this->title = Yii::t('multipage', 'regiony');
+$this->title = \Yii::t('multipage', 'regiony');
 $this->params['title'] = $this->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('multipage', 'strany'), 'url' => ['country/index']];
+$this->params['breadcrumbs'][] = ['label' => \Yii::t('multipage', 'strany'), 'url' => ['country/index']];
 $this->params['breadcrumbs'][] = $this->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('multipage', 'goroda'), 'url' => ['city/index']];
+$this->params['breadcrumbs'][] = ['label' => \Yii::t('multipage', 'goroda'), 'url' => ['city/index']];
 ?>
 
 <div class="region-index">

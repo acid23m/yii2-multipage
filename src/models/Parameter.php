@@ -88,7 +88,7 @@ class Parameter extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return 'parameter';
+        return '{{parameter}}';
     }
 
     /**

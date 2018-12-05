@@ -11,10 +11,10 @@ $lang = GeoUpdater::getGeoInfoLanguage();
 
 $this->title = $model->{"name_$lang"};
 $this->params['title'] = $this->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('multipage', 'strany'), 'url' => ['country/index']];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('multipage', 'regiony'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => \Yii::t('multipage', 'strany'), 'url' => ['country/index']];
+$this->params['breadcrumbs'][] = ['label' => \Yii::t('multipage', 'regiony'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('multipage', 'goroda'), 'url' => ['city/index']];
+$this->params['breadcrumbs'][] = ['label' => \Yii::t('multipage', 'goroda'), 'url' => ['city/index']];
 ?>
 
 <div class="region-view">

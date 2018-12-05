@@ -34,7 +34,7 @@ final class MarkerController extends BaseController
         $searchModel = new MarkerSearch;
         $dataProvider = $searchModel->search(\Yii::$app->getRequest()->getQueryParams());
 
-        return $this->render('index', compact('searchModel', 'dataProvider'));
+        return $this->render('index', \compact('searchModel', 'dataProvider'));
     }
 
     /**
@@ -59,7 +59,7 @@ final class MarkerController extends BaseController
      */
     public function actionCreate()
     {
-        $model = new Marker();
+        $model = new Marker;
 
         if ($model->load(\Yii::$app->getRequest()->post()) && $model->save()) {
             \Yii::$app->getSession()->setFlash('success', \Yii::t('multipage', 'zapis dobavlena'));
@@ -67,7 +67,7 @@ final class MarkerController extends BaseController
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', compact('model'));
+        return $this->render('create', \compact('model'));
     }
 
     /**
@@ -88,7 +88,7 @@ final class MarkerController extends BaseController
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', compact('model'));
+        return $this->render('update', \compact('model'));
     }
 
     /**

@@ -29,7 +29,7 @@ class GeoUpdater
      */
     protected static function csvIterator($file, $csv_delimiter = ','): \Generator
     {
-        while (($data = fgetcsv($file, 0, $csv_delimiter)) !== false) {
+        while (($data = \fgetcsv($file, 0, $csv_delimiter)) !== false) {
             if ($data === null || $data[0] === null) {
                 continue;
             }
@@ -49,7 +49,7 @@ class GeoUpdater
         set_time_limit(0);
 
         $data_dir = \Yii::getAlias(self::DATA_DIR);
-        $temp_dir = sys_get_temp_dir() . '/sxgeo';
+        $temp_dir = \sys_get_temp_dir() . '/sxgeo';
         $last_upd_file = $data_dir . '/sxgeoinfo.upd';
         $download_file = $temp_dir . '/sxgeoinfo.zip';
 
@@ -67,46 +67,46 @@ class GeoUpdater
             return false;
         }
         // check file with update time
-        if (!file_exists($last_upd_file)) {
-            $f = fopen($last_upd_file, 'cb');
-            fwrite($f, gmdate('D, d M Y H:i:s', 100) . ' GMT');
-            fclose($f);
+        if (!\file_exists($last_upd_file)) {
+            $f = \fopen($last_upd_file, 'cb');
+            \fwrite($f, \gmdate('D, d M Y H:i:s', 100) . ' GMT');
+            \fclose($f);
             unset($f);
         }
 
 
         // download archive file
-        $f = fopen($download_file, 'wb');
+        $f = \fopen($download_file, 'wb');
         if ($f === false) {
             \Yii::warning("Can\'t create temporary file $download_file");
 
             return false;
         }
 
-        $ch = curl_init('https://sypexgeo.net/files/SxGeo_Info.zip');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 300);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-        curl_setopt($ch, CURLOPT_FILE, $f);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['If-Modified-Since: ' . file_get_contents($last_upd_file)]);
+        $ch = \curl_init('https://sypexgeo.net/files/SxGeo_Info.zip');
+        \curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        \curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        \curl_setopt($ch, CURLOPT_HEADER, false);
+        \curl_setopt($ch, CURLOPT_TIMEOUT, 300);
+        \curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+        \curl_setopt($ch, CURLOPT_FILE, $f);
+        \curl_setopt($ch, CURLOPT_HTTPHEADER, ['If-Modified-Since: ' . \file_get_contents($last_upd_file)]);
 
-        if (curl_exec($ch) === false) {
-            \Yii::warning('SxGeo info file has not been downloaded: ' . curl_error($ch));
+        if (\curl_exec($ch) === false) {
+            \Yii::warning('SxGeo info file has not been downloaded: ' . \curl_error($ch));
 
             return false;
         }
 
-        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        fclose($f);
+        $code = \curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        \curl_close($ch);
+        \fclose($f);
         unset($f, $ch);
 
         // do nothing if file was not modified
         if ($code === 304) {
             try {
-                unlink($download_file);
+                \unlink($download_file);
             } catch (\Throwable $e) {
             }
 
@@ -114,18 +114,18 @@ class GeoUpdater
         }
 
         // change update time
-        $f = fopen($last_upd_file, 'wb');
-        fwrite($f, gmdate('D, d M Y H:i:s') . ' GMT');
-        fclose($f);
+        $f = \fopen($last_upd_file, 'wb');
+        \fwrite($f, \gmdate('D, d M Y H:i:s') . ' GMT');
+        \fclose($f);
         unset($f, $code);
 
 
         // unpack downloaded file
         $zip = new \ZipArchive;
         $extract = function (string $filename) use (&$zip, &$data_dir): void {
-            $f = fopen($data_dir . '/' . $filename, 'wb');
-            fwrite($f, $zip->getFromName($filename));
-            fclose($f);
+            $f = \fopen($data_dir . '/' . $filename, 'wb');
+            \fwrite($f, $zip->getFromName($filename));
+            \fclose($f);
         };
         if (($zip_status = $zip->open($download_file)) !== true) {
             \Yii::warning("SxGeo info file extraction error: $zip_status");
@@ -139,7 +139,7 @@ class GeoUpdater
         unset($zip, $extract);
 
         try {
-            unlink($download_file);
+            \unlink($download_file);
         } catch (\Throwable $e) {
         }
 
@@ -155,7 +155,7 @@ class GeoUpdater
         Country::getDb()->createCommand('VACUUM')->execute();
 
         $filename = $data_dir . '/country.tsv';
-        $f = fopen($filename, 'rb');
+        $f = \fopen($filename, 'rb');
         if ($f === false) {
             return false;
         }
@@ -191,7 +191,7 @@ class GeoUpdater
             }
         }
         $insert($buffer);
-        fclose($f);
+        \fclose($f);
         unset($filename, $f, $table_name, $insert, $i, $buffer, $id, $iso, $cont, $name_ru, $name_en, $lat, $lon, $tz, $r);
 
 
@@ -200,7 +200,7 @@ class GeoUpdater
         Region::getDb()->createCommand('VACUUM')->execute();
 
         $filename = $data_dir . '/region.tsv';
-        $f = fopen($filename, 'rb');
+        $f = \fopen($filename, 'rb');
         if ($f === false) {
             return false;
         }
@@ -235,7 +235,7 @@ class GeoUpdater
             }
         }
         $insert($buffer);
-        fclose($f);
+        \fclose($f);
         Region::getDb()->createCommand('CREATE INDEX "idx_region_country_id" ON "' . $table_name . '" ("country_id");');
         unset($filename, $f, $table_name, $insert, $i, $buffer, $id, $iso, $country_iso, $name_ru, $name_en, $tz, $okato, $country_id, $r, $country_id_query_c);
 
@@ -245,7 +245,7 @@ class GeoUpdater
         City::getDb()->createCommand('VACUUM')->execute();
 
         $filename = $data_dir . '/city.tsv';
-        $f = fopen($filename, 'rb');
+        $f = \fopen($filename, 'rb');
         if ($f === false) {
             return false;
         }
@@ -299,10 +299,10 @@ class GeoUpdater
      */
     public static function getData(): bool
     {
-        set_time_limit(0);
+        \set_time_limit(0);
 
         $data_dir = \Yii::getAlias(self::DATA_DIR);
-        $temp_dir = sys_get_temp_dir() . '/sxgeo';
+        $temp_dir = \sys_get_temp_dir() . '/sxgeo';
         $last_upd_file = $data_dir . '/sxgeodata.upd';
         $download_file = $temp_dir . '/sxgeodata.zip';
 
@@ -319,46 +319,46 @@ class GeoUpdater
             return false;
         }
         // check file with update time
-        if (!file_exists($last_upd_file)) {
-            $f = fopen($last_upd_file, 'cb');
-            fwrite($f, gmdate('D, d M Y H:i:s', 100) . ' GMT');
-            fclose($f);
+        if (!\file_exists($last_upd_file)) {
+            $f = \fopen($last_upd_file, 'cb');
+            \fwrite($f, \gmdate('D, d M Y H:i:s', 100) . ' GMT');
+            \fclose($f);
             unset($f);
         }
 
 
         // download archive file
-        $f = fopen($download_file, 'wb');
+        $f = \fopen($download_file, 'wb');
         if ($f === false) {
             \Yii::warning("Can\'t create temporary file $download_file");
 
             return false;
         }
 
-        $ch = curl_init('https://sypexgeo.net/files/SxGeoCity_utf8.zip');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 300);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-        curl_setopt($ch, CURLOPT_FILE, $f);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['If-Modified-Since: ' . file_get_contents($last_upd_file)]);
+        $ch = \curl_init('https://sypexgeo.net/files/SxGeoCity_utf8.zip');
+        \curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        \curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        \curl_setopt($ch, CURLOPT_HEADER, false);
+        \curl_setopt($ch, CURLOPT_TIMEOUT, 300);
+        \curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+        \curl_setopt($ch, CURLOPT_FILE, $f);
+        \curl_setopt($ch, CURLOPT_HTTPHEADER, ['If-Modified-Since: ' . \file_get_contents($last_upd_file)]);
 
-        if (curl_exec($ch) === false) {
-            \Yii::warning('SxGeo data file has not been downloaded: ' . curl_error($ch));
+        if (\curl_exec($ch) === false) {
+            \Yii::warning('SxGeo data file has not been downloaded: ' . \curl_error($ch));
 
             return false;
         }
 
-        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        fclose($f);
+        $code = \curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        \curl_close($ch);
+        \fclose($f);
         unset($f, $ch);
 
         // do nothing if file was not modified
         if ($code === 304) {
             try {
-                unlink($download_file);
+                \unlink($download_file);
             } catch (\Throwable $e) {
             }
 
@@ -366,9 +366,9 @@ class GeoUpdater
         }
 
         // change update time
-        $f = fopen($last_upd_file, 'wb');
-        fwrite($f, gmdate('D, d M Y H:i:s') . ' GMT');
-        fclose($f);
+        $f = \fopen($last_upd_file, 'wb');
+        \fwrite($f, \gmdate('D, d M Y H:i:s') . ' GMT');
+        \fclose($f);
         unset($f, $code);
 
 
@@ -384,7 +384,7 @@ class GeoUpdater
         unset($zip, $extract);
 
         try {
-            unlink($download_file);
+            \unlink($download_file);
         } catch (\Throwable $e) {
         }
 

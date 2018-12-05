@@ -43,7 +43,7 @@ class City extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return 'city';
+        return '{{city}}';
     }
 
     /**

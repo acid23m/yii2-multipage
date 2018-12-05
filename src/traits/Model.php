@@ -26,13 +26,13 @@ trait Model
      */
     public function getList(string $_list): \Closure
     {
-        if (!property_exists($this, $_list)) {
+        if (!\property_exists($this, $_list)) {
             throw new InvalidArgumentException('List not found.');
         }
 
         $list = $this->$_list;
 
-        if (!is_iterable($list)) {
+        if (!\is_iterable($list)) {
             throw new InvalidArgumentException('List must be an associative array.');
         }
 
@@ -41,7 +41,7 @@ trait Model
          * @return iterable
          */
         return function (bool $associative = true) use ($list): iterable {
-            return $associative ? $list : array_keys($list);
+            return $associative ? $list : \array_keys($list);
         };
     }
 
@@ -52,7 +52,7 @@ trait Model
      */
     public function asString(string $template): string
     {
-        preg_match_all('/{([\w_]+)}/', $template, $matches);
+        \preg_match_all('/{([\w_]+)}/', $template, $matches);
 
         $search = $matches[0];
         $replace = function () use ($matches) {
@@ -65,7 +65,7 @@ trait Model
             }
         };
 
-        return str_replace($search, iterator_to_array($replace()), $template);
+        return \str_replace($search, \iterator_to_array($replace()), $template);
     }
 
 }

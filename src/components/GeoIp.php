@@ -156,7 +156,7 @@ class GeoIp extends Component
         $c_params = [
             'name' => self::GEOLOCATION_STORAGE_ID,
             'value' => $data,
-            'expire' => time() + 2592000,
+            'expire' => \time() + 2592000,
             'httpOnly' => true,
             'secure' => true
         ];

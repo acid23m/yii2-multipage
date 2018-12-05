@@ -90,13 +90,13 @@ final class CountrySearch extends Country
             'country.id' => $this->id
         ]);
 
-        $query->andFilterWhere(['like', 'country.iso', $this->iso])
-            ->andFilterWhere(['like', 'country.continent', $this->continent])
-            ->andFilterWhere(['like', 'country.name_ru', $this->name_ru])
-            ->andFilterWhere(['like', 'country.name_en', $this->name_en])
-            ->andFilterWhere(['like', 'country.timezone', $this->timezone])
-            ->andFilterWhere(['like', 'country.latitude', $this->latitude])
-            ->andFilterWhere(['like', 'country.longitude', $this->longitude]);
+        $query->andFilterWhere(['like', '{{country}}.[[iso]]', $this->iso])
+            ->andFilterWhere(['like', '{{country}}.[[continent]]', $this->continent])
+            ->andFilterWhere(['like', '{{country}}.[[name_ru]]', $this->name_ru])
+            ->andFilterWhere(['like', '{{country}}.[[name_en]]', $this->name_en])
+            ->andFilterWhere(['like', '{{country}}.[[timezone]]', $this->timezone])
+            ->andFilterWhere(['like', '{{country}}.[[latitude]]', $this->latitude])
+            ->andFilterWhere(['like', '{{country}}.[[longitude]]', $this->longitude]);
 
         return $dataProvider;
     }

@@ -38,7 +38,7 @@ final class CityController extends BaseController
         $searchModel = new CitySearch;
         $dataProvider = $searchModel->search(\Yii::$app->getRequest()->getQueryParams());
 
-        return $this->render('index', compact('searchModel', 'dataProvider'));
+        return $this->render('index', \compact('searchModel', 'dataProvider'));
     }
 
     /**

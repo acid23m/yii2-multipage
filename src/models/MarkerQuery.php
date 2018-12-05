@@ -26,7 +26,7 @@ final class MarkerQuery extends ActiveQuery
      */
     public function published(): self
     {
-        $this->andWhere(['[[status]]' => Marker::STATUS_ACTIVE]);
+        $this->andWhere(['{{marker}}.[[status]]' => Marker::STATUS_ACTIVE]);
 
         return $this;
     }
@@ -37,7 +37,7 @@ final class MarkerQuery extends ActiveQuery
      */
     public function draft(): self
     {
-        $this->andWhere(['[[status]]' => Marker::STATUS_NOT_ACTIVE]);
+        $this->andWhere(['{{marker}}.[[status]]' => Marker::STATUS_NOT_ACTIVE]);
 
         return $this;
     }

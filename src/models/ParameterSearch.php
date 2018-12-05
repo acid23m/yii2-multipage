@@ -78,14 +78,14 @@ final class ParameterSearch extends Parameter
         }
 
         $query->andFilterWhere([
-            'parameter.id' => $this->id,
-            'parameter.marker_id' => $this->marker_id,
-            'parameter.language' => $this->language,
-            'parameter.type' => $this->type,
-            'parameter.status' => $this->status
+            '{{parameter}}.[[id]]' => $this->id,
+            '{{parameter}}.[[marker_id]]' => $this->marker_id,
+            '{{parameter}}.[[language]]' => $this->language,
+            '{{parameter}}.[[type]]' => $this->type,
+            '{{parameter}}.[[status]]' => $this->status
         ]);
 
-        $query->andFilterWhere(['like', 'parameter.replacement', $this->replacement]);
+        $query->andFilterWhere(['like', '{{parameter}}.[[replacement]]', $this->replacement]);
 
         return $dataProvider;
     }

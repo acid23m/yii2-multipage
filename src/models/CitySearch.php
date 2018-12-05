@@ -91,15 +91,15 @@ final class CitySearch extends City
         }
 
         $query->andFilterWhere([
-            'city.id' => $this->id,
-            'city.region_id' => $this->region_id,
-            'city.country_id' => $this->country_id
+            '{{city}}.[[id]]' => $this->id,
+            '{{city}}.[[region_id]]' => $this->region_id,
+            '{{city}}.[[country_id]]' => $this->country_id
         ]);
 
-        $query->andFilterWhere(['like', 'city.name_ru', $this->name_ru])
-            ->andFilterWhere(['like', 'city.name_en', $this->name_en])
-            ->andFilterWhere(['like', 'city.latitude', $this->latitude])
-            ->andFilterWhere(['like', 'city.longitude', $this->longitude]);
+        $query->andFilterWhere(['like', '{{city}}.[[name_ru]]', $this->name_ru])
+            ->andFilterWhere(['like', '{{city}}.[[name_en]]', $this->name_en])
+            ->andFilterWhere(['like', '{{city}}.[[latitude]]', $this->latitude])
+            ->andFilterWhere(['like', '{{city}}.[[longitude]]', $this->longitude]);
 
         return $dataProvider;
     }

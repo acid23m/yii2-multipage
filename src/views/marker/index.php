@@ -11,6 +11,7 @@ use yii\grid\GridView;
 use yii\grid\SerialColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use multipage\models\Marker;
 
 /** @var \yii\web\View $this */
 /** @var \multipage\models\MarkerSearch $searchModel */
@@ -50,8 +51,7 @@ $status_list = $searchModel->getList('statuses');
                     'text',
                     [
                         'attribute' => 'status',
-                        'value' => function ($model, $key, $index) use ($status_list) {
-                            /** @var \multipage\models\Marker $model */
+                        'value' => function (Marker $model, $key, $index) use ($status_list) {
                             return $status_list()[$model->status];
                         },
                         'filter' => $status_list()

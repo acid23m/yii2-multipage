@@ -42,8 +42,8 @@ $type_list = $model->getList('types');
             url: "' . Url::to(['type-input']) . '",
             data: {
                 type,
-                form: "' . base64_encode(serialize($form)) . '",
-                model: "' . base64_encode(serialize($model)) . '"
+                form: "' . \base64_encode(\serialize($form)) . '",
+                model: "' . \base64_encode(\serialize($model)) . '"
             }
         }).done((html, textStatus, jqXHR) => {
             $container.html(html);

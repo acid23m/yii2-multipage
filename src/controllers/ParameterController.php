@@ -49,7 +49,7 @@ final class ParameterController extends BaseController
 
         $marks = Marker::allList();
 
-        return $this->render('index', compact('searchModel', 'dataProvider', 'marks'));
+        return $this->render('index', \compact('searchModel', 'dataProvider', 'marks'));
     }
 
     /**
@@ -74,7 +74,7 @@ final class ParameterController extends BaseController
      */
     public function actionCreate()
     {
-        $model = new Parameter();
+        $model = new Parameter;
 
         $marks = Marker::allList(false);
 
@@ -84,7 +84,7 @@ final class ParameterController extends BaseController
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', compact('model', 'marks'));
+        return $this->render('create', \compact('model', 'marks'));
     }
 
     /**
@@ -107,7 +107,7 @@ final class ParameterController extends BaseController
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', compact('model', 'marks'));
+        return $this->render('update', \compact('model', 'marks'));
     }
 
     /**
@@ -168,23 +168,23 @@ final class ParameterController extends BaseController
 
         /** @var int $type */
         $type = (int) $request->post('type');
-        $form = unserialize(
-            base64_decode($request->post('form'))
+        $form = \unserialize(
+            \base64_decode($request->post('form'))
         );
         /** @var Parameter $model */
-        $model = unserialize(
-            base64_decode($request->post('model'))
+        $model = \unserialize(
+            \base64_decode($request->post('model'))
         );
 
         switch ($type) {
             case $model::TYPE_URL_QUERY:
-                return $this->renderAjax('_form_url', compact('form', 'model'));
+                return $this->renderAjax('_form_url', \compact('form', 'model'));
             case $model::TYPE_GEO_COUNTRY:
-                return $this->renderAjax('_form_country', compact('form', 'model'));
+                return $this->renderAjax('_form_country', \compact('form', 'model'));
             case $model::TYPE_GEO_REGION:
-                return $this->renderAjax('_form_region', compact('form', 'model'));
+                return $this->renderAjax('_form_region', \compact('form', 'model'));
             case $model::TYPE_GEO_CITY:
-                return $this->renderAjax('_form_city', compact('form', 'model'));
+                return $this->renderAjax('_form_city', \compact('form', 'model'));
             default:
                 return '';
         }
