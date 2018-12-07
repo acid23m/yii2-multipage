@@ -61,7 +61,7 @@ class Marker extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{marker}}';
+        return '{{%marker}}';
     }
 
     /**

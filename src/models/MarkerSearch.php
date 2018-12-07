@@ -77,12 +77,12 @@ final class MarkerSearch extends Marker
         }
 
         $query->andFilterWhere([
-            '{{marker}}.[[id]]' => $this->id,
-            '{{marker}}.[[status]]' => $this->status
+            '{{%marker}}.[[id]]' => $this->id,
+            '{{%marker}}.[[status]]' => $this->status
         ]);
 
-        $query->andFilterWhere(['like', '{{marker}}.[[name]]', $this->name])
-            ->andFilterWhere(['like', '{{marker}}.[[text]]', $this->text]);
+        $query->andFilterWhere(['like', '{{%marker}}.[[name]]', $this->name])
+            ->andFilterWhere(['like', '{{%marker}}.[[text]]', $this->text]);
 
         return $dataProvider;
     }

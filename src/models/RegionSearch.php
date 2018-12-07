@@ -69,14 +69,14 @@ final class RegionSearch extends Region
         }
 
         $query->andFilterWhere([
-            '{{region}}.[[id]]' => $this->id,
-            '{{region}}.[[country_id]]' => $this->country_id,
+            '{{%region}}.[[id]]' => $this->id,
+            '{{%region}}.[[country_id]]' => $this->country_id,
         ]);
 
-        $query->andFilterWhere(['like', '{{region}}.[[iso]]', $this->iso])
-            ->andFilterWhere(['like', '{{region}}.[[name_ru]]', $this->name_ru])
-            ->andFilterWhere(['like', '{{region}}.[[name_en]]', $this->name_en])
-            ->andFilterWhere(['like', '{{region}}.[[timezone]]', $this->timezone]);
+        $query->andFilterWhere(['like', '{{%region}}.[[iso]]', $this->iso])
+            ->andFilterWhere(['like', '{{%region}}.[[name_ru]]', $this->name_ru])
+            ->andFilterWhere(['like', '{{%region}}.[[name_en]]', $this->name_en])
+            ->andFilterWhere(['like', '{{%region}}.[[timezone]]', $this->timezone]);
 
         return $dataProvider;
     }

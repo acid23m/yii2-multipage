@@ -41,7 +41,7 @@ class Region extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{region}}';
+        return '{{%region}}';
     }
 
     /**

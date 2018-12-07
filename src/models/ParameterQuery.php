@@ -24,7 +24,7 @@ final class ParameterQuery extends ActiveQuery
      */
     public function published(): self
     {
-        $this->andWhere(['{{parameter}}.[[status]]' => Parameter::STATUS_ACTIVE]);
+        $this->andWhere(['{{%parameter}}.[[status]]' => Parameter::STATUS_ACTIVE]);
 
         return $this;
     }
@@ -35,7 +35,7 @@ final class ParameterQuery extends ActiveQuery
      */
     public function draft(): self
     {
-        $this->andWhere(['{{parameter}}.[[status]]' => Parameter::STATUS_NOT_ACTIVE]);
+        $this->andWhere(['{{%parameter}}.[[status]]' => Parameter::STATUS_NOT_ACTIVE]);
 
         return $this;
     }

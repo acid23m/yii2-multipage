@@ -55,14 +55,14 @@ class LocationController extends Controller
         $data = Region::find()
             ->with([
                 'country' => function (CountryQuery $query) {
-                    $query->addSelect(['{{country}}.[[id]]', '{{country}}.[[name_ru]]', '{{country}}.[[name_en]]']);
+                    $query->addSelect(['{{%country}}.[[id]]', '{{%country}}.[[name_ru]]', '{{%country}}.[[name_en]]']);
                 }
             ])
-            ->select(['{{region}}.[[id]]', '{{region}}.[[country_id]]', '{{region}}.[[iso]]', '{{region}}.[[name_ru]]', '{{region}}.[[name_en]]'])
-            ->orFilterWhere(['like', '{{region}}.[[iso]]', $q])
-            ->orFilterWhere(['like', '{{region}}.[[name_ru]]', $q])
-            ->orFilterWhere(['like', '{{region}}.[[name_ru]]', $this->ucfirst($q)])
-            ->orFilterWhere(['like', '{{region}}.[[name_en]]', $q])
+            ->select(['{{%region}}.[[id]]', '{{%region}}.[[country_id]]', '{{%region}}.[[iso]]', '{{%region}}.[[name_ru]]', '{{%region}}.[[name_en]]'])
+            ->orFilterWhere(['like', '{{%region}}.[[iso]]', $q])
+            ->orFilterWhere(['like', '{{%region}}.[[name_ru]]', $q])
+            ->orFilterWhere(['like', '{{%region}}.[[name_ru]]', $this->ucfirst($q)])
+            ->orFilterWhere(['like', '{{%region}}.[[name_en]]', $q])
             ->limit(20)
             ->all();
 
@@ -94,16 +94,16 @@ class LocationController extends Controller
         $data = City::find()
             ->with([
                 'region' => function (RegionQuery $query) {
-                    $query->addSelect(['{{region}}.[[id]]', '{{region}}.[[name_ru]]', '{{region}}.[[name_en]]']);
+                    $query->addSelect(['{{%region}}.[[id]]', '{{%region}}.[[name_ru]]', '{{%region}}.[[name_en]]']);
                 },
                 'country' => function (CountryQuery $query) {
-                    $query->addSelect(['{{country}}.[[id]]', '{{country}}.[[name_ru]]', '{{country}}.[[name_en]]']);
+                    $query->addSelect(['{{%country}}.[[id]]', '{{%country}}.[[name_ru]]', '{{%country}}.[[name_en]]']);
                 }
             ])
-            ->select(['{{city}}.[[id]]', '{{city}}.[[region_id]]', '{{city}}.[[country_id]]', '{{city}}.[[name_ru]]', '{{city}}.[[name_en]]'])
-            ->orFilterWhere(['like', '{{city}}.[[name_ru]]', $q])
-            ->orFilterWhere(['like', '{{city}}.[[name_ru]]', $this->ucfirst($q)])
-            ->orFilterWhere(['like', '{{city}}.[[name_en]]', $q])
+            ->select(['{{%city}}.[[id]]', '{{%city}}.[[region_id]]', '{{%city}}.[[country_id]]', '{{%city}}.[[name_ru]]', '{{%city}}.[[name_en]]'])
+            ->orFilterWhere(['like', '{{%city}}.[[name_ru]]', $q])
+            ->orFilterWhere(['like', '{{%city}}.[[name_ru]]', $this->ucfirst($q)])
+            ->orFilterWhere(['like', '{{%city}}.[[name_en]]', $q])
             ->limit(20)
             ->all();
 
